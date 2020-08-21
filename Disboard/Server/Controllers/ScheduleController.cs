@@ -1,7 +1,6 @@
 ﻿using Disboard.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace Disboard.Server.Controllers
 {
@@ -32,8 +31,12 @@ namespace Disboard.Server.Controllers
             Episode parasite2 = new Episode(false, 6, 3, 2, parasiteUrl);
 
             Schedule schedule = new Schedule();
-            schedule.Week[4].Episodes = new List<Episode> { noGameNoLife1, drStone1, parasite1 };
-            schedule.Week[5].Episodes = new List<Episode> { noGameNoLife2, drStone2, parasite2 };
+            schedule.Week[4].Episodes.Add(noGameNoLife1);
+            schedule.Week[4].Episodes.Add(drStone1);
+            schedule.Week[4].Episodes.Add(parasite1);
+            schedule.Week[5].Episodes.Add(noGameNoLife2);
+            schedule.Week[5].Episodes.Add(drStone2);
+            schedule.Week[5].Episodes.Add(parasite2);
 
             return schedule;
         }

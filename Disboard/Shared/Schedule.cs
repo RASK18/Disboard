@@ -7,7 +7,7 @@ namespace Disboard.Shared
 {
     public class Schedule
     {
-        public List<Day> Week { get; }
+        public List<Day> Week { get; set; }
 
         public Schedule()
         {

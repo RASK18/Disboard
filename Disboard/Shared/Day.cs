@@ -11,6 +11,7 @@ namespace Disboard.Shared
         public DateTime Date { get; }
         public List<Episode> Episodes { get; set; } = new List<Episode>();
 
+        public Day() { }
         public Day(DateTime date) => Date = date;
 
         private string DayOfWeekName()
