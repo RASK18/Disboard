@@ -1,7 +1,57 @@
 ﻿@page "/"
+@using Disboard.Shared
+@inject HttpClient Http
 
-<h1>Hello, world!</h1>
+@if (_schedule == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <h3>Lunes</h3>
+            @*@foreach (Episode forecast in _schedule.Monday.Episodes)
+            {*@
+                <div class="d-flex flex-wrap">
 
-Welcome to your new app.
+                </div>
+            @*}*@
+        </div>
+        <div class="col">
+            Martes
+        </div>
+        <div class="col">
+            Miércoles
+        </div>
+        <div class="col">
+            Jueves
+        </div>
+        <div class="col">
+            Viernes
+        </div>
+        <div class="col">
+            Sábado
+        </div>
+        <div class="col">
+            Domingo
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col">
+        <h1>Populares</h1>
+    </div>
+</div>
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+
+@code {
+    private IEnumerable<Day> _schedule;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _schedule = await Http.GetFromJsonAsync<IEnumerable<Day>>("Schedule");
+    }
+}
