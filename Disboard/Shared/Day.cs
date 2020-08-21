@@ -6,21 +6,12 @@ namespace Disboard.Shared
 {
     public class Day
     {
-        public bool IsToday => Date == DateTimeOffset.Now.Date;
+        public bool IsToday => Date == DateTime.UtcNow.Date;
         public string Name => DayOfWeekName();
-        public DateTime Date { get; set; }
-        public IEnumerable<Episode> Episodes { get; set; }
+        public DateTime Date { get; }
+        public List<Episode> Episodes { get; set; } = new List<Episode>();
 
-        public Day()
-        {
-
-        }
-
-        public Day(DateTime date, IEnumerable<Episode> episodes)
-        {
-            Date = date;
-            Episodes = episodes;
-        }
+        public Day(DateTime date) => Date = date;
 
         private string DayOfWeekName()
         {

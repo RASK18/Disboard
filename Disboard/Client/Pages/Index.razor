@@ -9,33 +9,20 @@
 else
 {
     <div class="row">
-        <div class="col">
-            <h3>Lunes</h3>
-            @*@foreach (Episode forecast in _schedule.Monday.Episodes)
-            {*@
+        @foreach (Day day in _schedule.Week)
+        {
+            <div class="col">
+                <h3>@day.Name</h3>
                 <div class="d-flex flex-wrap">
-
+                    @foreach (Episode episode in day.Episodes)
+                    {
+                        <div class="border">
+                            <img class="rounded" src="@episode.ImgUrl" alt="@episode.AnimeId" />
+                        </div>
+                    }
                 </div>
-            @*}*@
-        </div>
-        <div class="col">
-            Martes
-        </div>
-        <div class="col">
-            Miércoles
-        </div>
-        <div class="col">
-            Jueves
-        </div>
-        <div class="col">
-            Viernes
-        </div>
-        <div class="col">
-            Sábado
-        </div>
-        <div class="col">
-            Domingo
-        </div>
+            </div>
+        }
     </div>
 }
 
@@ -48,10 +35,13 @@ else
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @code {
-    private IEnumerable<Day> _schedule;
+    private Schedule _schedule;
 
     protected override async Task OnInitializedAsync()
     {
-        _schedule = await Http.GetFromJsonAsync<IEnumerable<Day>>("Schedule");
+
+
+
+        _schedule = await Http.GetFromJsonAsync<Schedule>("Schedule");
     }
 }

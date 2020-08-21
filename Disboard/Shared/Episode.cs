@@ -8,11 +8,6 @@
         public int Number { get; set; }
         public string ImgUrl { get; set; }
 
-        public Episode()
-        {
-            
-        }
-
         public Episode(bool hasBeenReleased, int id, int animeId, int number, string imgUrl)
         {
             HasBeenReleased = hasBeenReleased;

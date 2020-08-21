@@ -9,19 +9,5 @@ namespace Disboard.Shared
         public string Name { get; set; }
         public string ImgUrl { get; set; }
         public IEnumerable<Episode> Episodes { get; set; }
-
-        public Anime()
-        {
-
-        }
-
-        public Anime(bool hasBeenReleased, int id, string name, string imgUrl, IEnumerable<Episode> episodes)
-        {
-            HasBeenReleased = hasBeenReleased;
-            Id = id;
-            Name = name;
-            ImgUrl = imgUrl;
-            Episodes = episodes;
-        }
     }
 }
