@@ -16,19 +16,20 @@ else
                 <div class="d-flex flex-wrap">
                     @foreach (Episode episode in day.Episodes)
                     {
-                        <div class="border">
-                            <img class="rounded" src="@episode.ImgUrl" alt="@episode.AnimeId" />
+                        <div class="border w-100">
+                            <img class="img-thumbnail" src="@episode.ImgUrl" alt="@episode.AnimeId" />
                         </div>
                     }
                 </div>
             </div>
+
         }
     </div>
 }
 
 <div class="row">
     <div class="col">
-        <h1>Populares</h1>
+        <h2>Populares</h2>
     </div>
 </div>
 
@@ -39,9 +40,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-
-
-
         _schedule = await Http.GetFromJsonAsync<Schedule>("Schedule");
     }
 }

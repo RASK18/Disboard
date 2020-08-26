@@ -8,7 +8,7 @@ namespace Disboard.Shared
     {
         public bool IsToday => Date == DateTime.UtcNow.Date;
         public string Name => DayOfWeekName();
-        public DateTime Date { get; }
+        public DateTime Date { get; set; }
         public List<Episode> Episodes { get; set; } = new List<Episode>();
 
         public Day() { }
