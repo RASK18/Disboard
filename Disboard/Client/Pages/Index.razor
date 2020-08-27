@@ -8,40 +8,57 @@
 }
 else
 {
-    <div class="row">
+    <div class="row border mt-2">
         @foreach (DayDto day in _scheduleDto.Week)
         {
-            <div class="col">
+            <div class="col border">
                 <h3>@day.Name</h3>
-                <div class="d-flex flex-wrap">
+                <div class="d-flex flex-wrap border">
                     @foreach (AnimeDto animeDto in day.Animes)
                     {
                         EpisodeDto lastEpisode = animeDto.Episodes.Single();
 
-                        <div class="border w-100">
-                            <img class="img-thumbnail" src="@animeDto.ImgUrl" alt="@lastEpisode.Name" />
+                        <div class="card bg-dark text-white overflow-hidden" style="height: 135px">
+                            <img class="card-img position-relative" style="bottom: 50%; opacity: 0.5" src="@animeDto.ImgUrl" alt="@lastEpisode.Name">
+                            <div class="card-img-overlay">
+                                <h5 class="card-title">@animeDto.Name @lastEpisode.Number</h5>
+                                <p class="card-text">@lastEpisode.HasBeenReleased</p>
+                            </div>
                         </div>
                     }
                 </div>
             </div>
-
         }
+    </div>
+
+    <h2>Populares</h2>
+
+    <div class="row">
+        <div class="col">
+            <div class="d-flex flex-wrap">
+                @foreach (AnimeDto animeDto in _popular)
+                {
+                    <div class="card bg-dark text-white overflow-hidden" style="height: 135px">
+                        <img class="card-img position-relative" style="bottom: 50%; opacity: 0.5" src="@animeDto.ImgUrl" alt="@animeDto.Name">
+                        <div class="card-img-overlay">
+                            <h5 class="card-title">@animeDto.Name</h5>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 }
 
-<div class="row">
-    <div class="col">
-        <h2>Populares</h2>
-    </div>
-</div>
-
-<SurveyPrompt Title="How is Blazor working for you?" />
-
 @code {
+    private IEnumerable<AnimeDto> _popular;
+
     private ScheduleDto _scheduleDto;
 
     protected override async Task OnInitializedAsync()
     {
         _scheduleDto = await Http.GetFromJsonAsync<ScheduleDto>("Schedule");
+
+        _popular = await Http.GetFromJsonAsync<IEnumerable<AnimeDto>>("Anime/Popular");
     }
 }

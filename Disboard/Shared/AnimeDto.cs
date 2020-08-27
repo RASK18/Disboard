@@ -51,5 +51,17 @@ namespace Disboard.Shared
             HasBeenReleased = animeSub.AiringStart < DateTime.Now;
             Score = animeSub.Score;
         }
+
+        public AnimeDto(AnimeTopEntry animeTop)
+        {
+            Id = animeTop.MalId;
+            ImgUrl = animeTop.ImageURL;
+            Name = animeTop.Title;
+            Type = animeTop.Type;
+            Score = animeTop.Score;
+            HasBeenReleased = !string.IsNullOrWhiteSpace(animeTop.AiringStart);
+            IsCompleted = !string.IsNullOrWhiteSpace(animeTop.AiringEnd);
+            Total = animeTop.Episodes;
+        }
     }
 }

@@ -1,0 +1,20 @@
+﻿@page "/anime"
+@using Disboard.Shared
+
+<h1>@AnimeDto.Name</h1>
+
+<p>Current count: @_currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+    [Parameter] 
+    public AnimeDto AnimeDto { get; set; } 
+
+    private int _currentCount = 0;
+
+    private void IncrementCount()
+    {
+        _currentCount++;
+    }
+}
