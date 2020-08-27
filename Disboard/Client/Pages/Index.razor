@@ -2,22 +2,24 @@
 @using Disboard.Shared
 @inject HttpClient Http
 
-@if (_schedule == null)
+@if (_scheduleDto == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
     <div class="row">
-        @foreach (Day day in _schedule.Week)
+        @foreach (DayDto day in _scheduleDto.Week)
         {
             <div class="col">
                 <h3>@day.Name</h3>
                 <div class="d-flex flex-wrap">
-                    @foreach (Episode episode in day.Episodes)
+                    @foreach (AnimeDto animeDto in day.Animes)
                     {
+                        EpisodeDto lastEpisode = animeDto.Episodes.Single();
+
                         <div class="border w-100">
-                            <img class="img-thumbnail" src="@episode.ImgUrl" alt="@episode.AnimeId" />
+                            <img class="img-thumbnail" src="@animeDto.ImgUrl" alt="@lastEpisode.Name" />
                         </div>
                     }
                 </div>
@@ -36,10 +38,10 @@ else
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @code {
-    private Schedule _schedule;
+    private ScheduleDto _scheduleDto;
 
     protected override async Task OnInitializedAsync()
     {
-        _schedule = await Http.GetFromJsonAsync<Schedule>("Schedule");
+        _scheduleDto = await Http.GetFromJsonAsync<ScheduleDto>("Schedule");
     }
 }

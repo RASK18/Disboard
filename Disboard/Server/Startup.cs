@@ -20,6 +20,7 @@ namespace Disboard.Server
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureSwagger(services);
+            InjectDependencies(services);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
