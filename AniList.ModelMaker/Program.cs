@@ -1,146 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AniList.ModelMaker.Introspection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
-using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AniList.ModelMaker
 {
     internal class Program
     {
-        public static readonly string TxtPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
-            .Parent?.Parent?.Parent?.FullName + "\\Definition.txt";
+        private const string UsingClass1 = "using Disboard.Server.AniList.Enums;";
+        private const string UsingClass2 = "using System.Collections.Generic;";
+        private const string UsingEnum1 = "using System.Runtime.Serialization;";
+        private const string NamespaceTmp = "namespace Disboard.Server.AniList.{0}";
+        private const string SummaryStart = "/// <summary>";
+        private const string SummaryTmp = "/// {0}";
+        private const string SummaryEnd = "/// </summary>";
+        private const string ObjectTmp = "public {0} {1}";
+        private const string EnumItemTmp = "[EnumMember(Value = \"{0}\")] {1},";
+        private const string ClassItemTmp = "public {0} {1} { get; set; }";
 
-        public static readonly string AniListPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
-                                                       .Parent?.Parent?.Parent?.Parent?.FullName +
-                                                   "\\Disboard\\Server\\AniList";
+        private static readonly string AniListPath = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)
+                                                         .Parent?.Parent?.Parent?.Parent?.FullName +
+                                                     "\\Disboard\\Server\\AniList";
 
-        private static void Main()
+        private static async Task Main()
         {
-            string text = File.ReadAllText(TxtPath);
-            List<string> splits = text.Split("\r\n\r\n").ToList();
+            const string query = "{ __schema { types { kind name description fields { name description } enumValues { name description } } } }";
 
-            if (splits[0].Contains("..."))
-                WriteClass(splits);
-            else
-                WriteEnum(splits);
-        }
+            using HttpClient client = new HttpClient();
+            string json = JsonConvert.SerializeObject(new { query });
+            HttpContent contentRequest = new StringContent(json, Encoding.UTF8, "application/json");
 
-        private static void WriteEnum(IList<string> splits)
-        {
-            Console.Write("Name of enum: ");
-            string enumName = Console.ReadLine();
-            string enumSummary = splits[0];
+            HttpResponseMessage response = await client.PostAsync("https://graphql.anilist.co", contentRequest);
+            string content = await response.Content.ReadAsStringAsync();
 
-            splits.RemoveAt(0);
+            JObject jObject = JObject.Parse(content);
+            JToken data = jObject["data"];
+            JToken item = data?["__schema"];
 
-            Dictionary<string, string> opts = splits
-                .Select(s => s.Split("\r\n"))
-                .ToDictionary(e => e[0], e => e[1]);
+            SchemaQl schema = item?.ToObject<SchemaQl>();
 
-            string toWrite =
-                 "using System.ComponentModel;\r\n" +
-                 "\r\n" +
-                 "namespace Disboard.Server.AniList.Enums\r\n" +
-                 "{\r\n" +
-                 "    /// <summary>\r\n" +
-                $"    /// {enumSummary}\r\n" +
-                 "    /// </summary>\r\n" +
-                $"    public enum {enumName}\r\n" +
-                 "    {\r\n";
 
-            foreach ((string key, string value) in opts)
-            {
-                string titleCase = key.Split('_')
-                                      .Select(w => char.ToUpperInvariant(w[0]) + w.Substring(1).ToLowerInvariant())
-                                      .Aggregate((i, j) => i + j);
-
-                toWrite +=
-                     "        /// <summary>\r\n" +
-                    $"        /// {value}\r\n" +
-                     "        /// </summary>\r\n" +
-                    $"        [Description(\"{key}\")] {titleCase},\r\n";
-            }
-
-            toWrite += "    }\r\n" +
-                       "}\r\n";
-
-            File.WriteAllText($"{AniListPath}\\Enums\\{enumName}.cs", toWrite);
-        }
-
-        private static void WriteClass(IList<string> splits)
-        {
-            int nameStart = splits[0].IndexOf(" ", StringComparison.Ordinal) + 1;
-            int nameEnd = splits[0].IndexOf("...", StringComparison.Ordinal);
-            int nameLength = nameEnd - nameStart;
-            string className = splits[0].Substring(nameStart, nameLength);
-            string classSummary = splits[0].Substring(nameEnd + 5);
-
-            splits.RemoveAt(0);
-
-            List<Property> props = new List<Property>();
-            foreach (string split in splits)
-            {
-                string name = split.Remove(split.IndexOfAny(new[] { ':', '(' }));
-                name = char.ToUpperInvariant(name[0]) + name.Substring(1);
-
-                #region Type
-
-                int typeStart = split.LastIndexOf(':') + 2;
-                int typeEnd = split.IndexOf("\r\n", typeStart, StringComparison.Ordinal);
-                int typeLength = typeEnd - typeStart;
-                string type = split.Substring(typeStart, typeLength);
-
-                if (type.StartsWith('['))
-                {
-                    string aux = type.Substring(1, typeLength - 2);
-
-                    if (aux.Contains('!'))
-                        aux = aux.Remove(aux.Length - 1);
-                    else
-                        aux += "?";
-
-                    type = $"IEnumerable<{aux}>";
-                }
-
-                if (type.Contains('!'))
-                    type = type.Remove(type.Length - 1);
-                else
-                    type += "?";
-
-                type = type.Replace("Int?", "int?")
-                           .Replace("String?", "string");
-
-                #endregion
-
-                string summary = split.Substring(typeEnd + 2);
-
-                props.Add(new Property(name, type, summary));
-            }
-
-            string toWrite =
-                 "using System;\r\n" +
-                 "\r\n" +
-                 "namespace Disboard.Server.AniList.Models\r\n" +
-                 "{\r\n" +
-                 "    /// <summary>\r\n" +
-                $"    /// {classSummary}\r\n" +
-                 "    /// </summary>\r\n" +
-                $"    public class {className}\r\n" +
-                 "    {\r\n";
-
-            foreach (Property prop in props)
-            {
-                toWrite +=
-                     "        /// <summary>\r\n" +
-                    $"        /// {prop.Summary}\r\n" +
-                     "        /// </summary>\r\n" +
-                    $"        public {prop.Type} {prop.Name} {{ get; set; }}\r\n";
-            }
-
-            toWrite += "    }\r\n" +
-                       "}\r\n";
-
-            File.WriteAllText($"{AniListPath}\\Models\\{className}.cs", toWrite);
         }
 
     }
