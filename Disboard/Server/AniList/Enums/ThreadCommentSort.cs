@@ -3,17 +3,17 @@ using System.Runtime.Serialization;
 namespace Disboard.Server.AniList.Enums
 {
     /// <summary>
-    /// Media type enum, anime or manga.
+    /// Thread comments sort enums
     /// </summary>
-    public enum MediaType
+    public enum ThreadCommentSort
     {
         /// <summary>
-        /// Japanese Anime
+        /// 
         /// </summary>
-        [EnumMember(Value = "ANIME")] Anime,
+        [EnumMember(Value = "ID")] Id,
         /// <summary>
-        /// Asian comic
+        /// 
         /// </summary>
-        [EnumMember(Value = "MANGA")] Manga,
+        [EnumMember(Value = "ID_DESC")] IdDesc,
     }
 }

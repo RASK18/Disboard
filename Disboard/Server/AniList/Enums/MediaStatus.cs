@@ -1,4 +1,4 @@
-using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Disboard.Server.AniList.Enums
 {
@@ -8,20 +8,20 @@ namespace Disboard.Server.AniList.Enums
     public enum MediaStatus
     {
         /// <summary>
+        /// Ended before the work could be finished
+        /// </summary>
+        [EnumMember(Value = "CANCELLED")] Cancelled,
+        /// <summary>
         /// Has completed and is no longer being released
         /// </summary>
-        [Description("FINISHED")] Finished,
-        /// <summary>
-        /// Currently releasing
-        /// </summary>
-        [Description("RELEASING")] Releasing,
+        [EnumMember(Value = "FINISHED")] Finished,
         /// <summary>
         /// To be released at a later date
         /// </summary>
-        [Description("NOT_YET_RELEASED")] NotYetReleased,
+        [EnumMember(Value = "NOT_YET_RELEASED")] NotYetReleased,
         /// <summary>
-        /// Ended before the work could be finished
+        /// Currently releasing
         /// </summary>
-        [Description("CANCELLED")] Cancelled,
+        [EnumMember(Value = "RELEASING")] Releasing,
     }
 }

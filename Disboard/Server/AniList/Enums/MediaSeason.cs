@@ -1,27 +1,27 @@
-using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Disboard.Server.AniList.Enums
 {
     /// <summary>
-    /// No Description
+    /// 
     /// </summary>
     public enum MediaSeason
     {
         /// <summary>
-        /// Months December to February
+        /// Months September to November
         /// </summary>
-        [Description("WINTER")] Winter,
+        [EnumMember(Value = "FALL")] Fall,
         /// <summary>
         /// Months March to May
         /// </summary>
-        [Description("SPRING")] Spring,
+        [EnumMember(Value = "SPRING")] Spring,
         /// <summary>
         /// Months June to August
         /// </summary>
-        [Description("SUMMER")] Summer,
+        [EnumMember(Value = "SUMMER")] Summer,
         /// <summary>
-        /// Months September to November
+        /// Months December to February
         /// </summary>
-        [Description("FALL")] Fall,
+        [EnumMember(Value = "WINTER")] Winter,
     }
 }

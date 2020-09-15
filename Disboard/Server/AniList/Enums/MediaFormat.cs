@@ -1,4 +1,4 @@
-using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Disboard.Server.AniList.Enums
 {
@@ -8,44 +8,44 @@ namespace Disboard.Server.AniList.Enums
     public enum MediaFormat
     {
         /// <summary>
-        /// Anime broadcast on television
+        /// Professionally published manga with more than one chapter
         /// </summary>
-        [Description("TV")] Tv,
-        /// <summary>
-        /// Anime which are under 15 minutes in length and broadcast on television
-        /// </summary>
-        [Description("TV_SHORT")] TvShort,
+        [EnumMember(Value = "MANGA")] Manga,
         /// <summary>
         /// Anime movies with a theatrical release
         /// </summary>
-        [Description("MOVIE")] Movie,
-        /// <summary>
-        /// Special episodes that have been included in DVD/Blu-ray releases, picture dramas, pilots, etc
-        /// </summary>
-        [Description("SPECIAL")] Special,
-        /// <summary>
-        /// (Original Video Animation) Anime that have been released directly on DVD/Blu-ray without originally going through a theatrical release or television broadcast
-        /// </summary>
-        [Description("OVA")] Ova,
-        /// <summary>
-        /// (Original Net Animation) Anime that have been originally released online or are only available through streaming services.
-        /// </summary>
-        [Description("ONA")] Ona,
+        [EnumMember(Value = "MOVIE")] Movie,
         /// <summary>
         /// Short anime released as a music video
         /// </summary>
-        [Description("MUSIC")] Music,
-        /// <summary>
-        /// Professionally published manga with more than one chapter
-        /// </summary>
-        [Description("MANGA")] Manga,
+        [EnumMember(Value = "MUSIC")] Music,
         /// <summary>
         /// Written books released as a series of light novels
         /// </summary>
-        [Description("NOVEL")] Novel,
+        [EnumMember(Value = "NOVEL")] Novel,
+        /// <summary>
+        /// (Original Net Animation) Anime that have been originally released online or are only available through streaming services.
+        /// </summary>
+        [EnumMember(Value = "ONA")] Ona,
         /// <summary>
         /// Manga with just one chapter
         /// </summary>
-        [Description("ONE_SHOT")] OneShot,
+        [EnumMember(Value = "ONE_SHOT")] OneShot,
+        /// <summary>
+        /// (Original Video Animation) Anime that have been released directly on DVD/Blu-ray without originally going through a theatrical release or television broadcast
+        /// </summary>
+        [EnumMember(Value = "OVA")] Ova,
+        /// <summary>
+        /// Special episodes that have been included in DVD/Blu-ray releases, picture dramas, pilots, etc
+        /// </summary>
+        [EnumMember(Value = "SPECIAL")] Special,
+        /// <summary>
+        /// Anime broadcast on television
+        /// </summary>
+        [EnumMember(Value = "TV")] Tv,
+        /// <summary>
+        /// Anime which are under 15 minutes in length and broadcast on television
+        /// </summary>
+        [EnumMember(Value = "TV_SHORT")] TvShort,
     }
 }

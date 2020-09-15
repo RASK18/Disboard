@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace AniList.ModelMaker.Introspection
+namespace AniList.ModelMaker.Introspection.Enums
 {
     /// <summary>
     /// A Directive can be adjacent to many parts of the GraphQL language, a __DirectiveLocation describes one such possible adjacencies.

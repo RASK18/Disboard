@@ -1,6 +1,5 @@
 using Disboard.Server.AniList.Enums;
 using System.Collections.Generic;
-using System.Globalization;
 
 namespace Disboard.Server.AniList.Models
 {

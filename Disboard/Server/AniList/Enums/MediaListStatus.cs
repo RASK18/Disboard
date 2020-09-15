@@ -1,4 +1,4 @@
-using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Disboard.Server.AniList.Enums
 {
@@ -8,28 +8,28 @@ namespace Disboard.Server.AniList.Enums
     public enum MediaListStatus
     {
         /// <summary>
-        /// Currently watching/reading
-        /// </summary>
-        [Description("CURRENT")] Current,
-        /// <summary>
-        /// Planning to watch/read
-        /// </summary>
-        [Description("PLANNING")] Planning,
-        /// <summary>
         /// Finished watching/reading
         /// </summary>
-        [Description("COMPLETED")] Completed,
+        [EnumMember(Value = "COMPLETED")] Completed,
+        /// <summary>
+        /// Currently watching/reading
+        /// </summary>
+        [EnumMember(Value = "CURRENT")] Current,
         /// <summary>
         /// Stopped watching/reading before completing
         /// </summary>
-        [Description("DROPPED")] Dropped,
+        [EnumMember(Value = "DROPPED")] Dropped,
         /// <summary>
         /// Paused watching/reading
         /// </summary>
-        [Description("PAUSED")] Paused,
+        [EnumMember(Value = "PAUSED")] Paused,
+        /// <summary>
+        /// Planning to watch/read
+        /// </summary>
+        [EnumMember(Value = "PLANNING")] Planning,
         /// <summary>
         /// Re-watching/reading
         /// </summary>
-        [Description("REPEATING")] Repeating,
+        [EnumMember(Value = "REPEATING")] Repeating,
     }
 }

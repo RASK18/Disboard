@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace AniList.ModelMaker.Introspection
+namespace AniList.ModelMaker.Introspection.Enums
 {
     /// <summary>
     /// An enum describing what kind of type a given __Type is.

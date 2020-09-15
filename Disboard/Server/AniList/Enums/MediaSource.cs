@@ -1,5 +1,4 @@
-using System.ComponentModel;
-using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace Disboard.Server.AniList.Enums
 {
@@ -9,40 +8,40 @@ namespace Disboard.Server.AniList.Enums
     public enum MediaSource
     {
         /// <summary>
-        /// An original production not based of another work
+        /// Version 2 only. Japanese Anime
         /// </summary>
-        [Description("ORIGINAL")] Original,
-        /// <summary>
-        /// Asian comic book
-        /// </summary>
-        [Description("MANGA")] Manga,
-        /// <summary>
-        /// Written work published in volumes
-        /// </summary>
-        [JsonProperty("LIGHT_NOVEL")] LIGHT_NOVEL,
-        /// <summary>
-        /// Video game driven primary by text and narrative
-        /// </summary>
-        [Description("VISUAL_NOVEL")] VisualNovel,
-        /// <summary>
-        /// Video game
-        /// </summary>
-        [Description("VIDEO_GAME")] VideoGame,
-        /// <summary>
-        /// Other
-        /// </summary>
-        [Description("OTHER")] Other,
-        /// <summary>
-        /// Version 2 only. Written works not published in volumes
-        /// </summary>
-        [Description("NOVEL")] Novel,
+        [EnumMember(Value = "ANIME")] Anime,
         /// <summary>
         /// Version 2 only. Self-published works
         /// </summary>
-        [Description("DOUJINSHI")] Doujinshi,
+        [EnumMember(Value = "DOUJINSHI")] Doujinshi,
         /// <summary>
-        /// Version 2 only. Japanese Anime
+        /// Written work published in volumes
         /// </summary>
-        [Description("ANIME")] Anime,
+        [EnumMember(Value = "LIGHT_NOVEL")] LightNovel,
+        /// <summary>
+        /// Asian comic book
+        /// </summary>
+        [EnumMember(Value = "MANGA")] Manga,
+        /// <summary>
+        /// Version 2 only. Written works not published in volumes
+        /// </summary>
+        [EnumMember(Value = "NOVEL")] Novel,
+        /// <summary>
+        /// An original production not based of another work
+        /// </summary>
+        [EnumMember(Value = "ORIGINAL")] Original,
+        /// <summary>
+        /// Other
+        /// </summary>
+        [EnumMember(Value = "OTHER")] Other,
+        /// <summary>
+        /// Video game
+        /// </summary>
+        [EnumMember(Value = "VIDEO_GAME")] VideoGame,
+        /// <summary>
+        /// Video game driven primary by text and narrative
+        /// </summary>
+        [EnumMember(Value = "VISUAL_NOVEL")] VisualNovel,
     }
 }

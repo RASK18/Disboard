@@ -25,9 +25,4 @@
     <ProjectReference Include="..\Shared\Disboard.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AniList\Models\" />
-  </ItemGroup>
-
-
 </Project>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AniList.ModelMaker.Introspection.Enums;
+using System.Collections.Generic;
 
 namespace AniList.ModelMaker.Introspection
 {
