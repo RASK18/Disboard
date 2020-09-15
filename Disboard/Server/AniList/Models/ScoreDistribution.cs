@@ -6,8 +6,12 @@ namespace Disboard.Server.AniList.Models
     public class ScoreDistribution
     {
         /// <summary>
-        /// The amount of list entries with this score
+        /// 
         /// </summary>
         public int? Score { get; set; }
+        /// <summary>
+        /// The amount of list entries with this score
+        /// </summary>
+        public int? Amount { get; set; }
     }
 }

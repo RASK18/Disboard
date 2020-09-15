@@ -1,7 +1,7 @@
 namespace Disboard.Server.AniList.Models
 {
     /// <summary>
-    /// No Description
+    /// 
     /// </summary>
     public class MediaCoverImage
     {

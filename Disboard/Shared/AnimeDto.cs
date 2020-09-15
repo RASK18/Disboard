@@ -7,7 +7,7 @@ namespace Disboard.Shared
         public bool? HasBeenReleased { get; set; }
         public bool? IsCompleted { get; set; }
         public int? Total { get; set; }
-        public long Id { get; set; }
+        public int Id { get; set; }
         public float? Score { get; set; }
         public float? ScoredBy { get; set; }
         public string Name { get; set; }

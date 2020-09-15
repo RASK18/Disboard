@@ -8,21 +8,9 @@ namespace Disboard.Server.AniList.Models
     public class MediaRank
     {
         /// <summary>
-        /// The id of the rank
+        /// If the ranking is based on all time instead of a season/year
         /// </summary>
-        public int Id { get; set; }
-        /// <summary>
-        /// The numerical rank of the media
-        /// </summary>
-        public int Rank { get; set; }
-        /// <summary>
-        /// The type of ranking
-        /// </summary>
-        public MediaRankType Type { get; set; }
-        /// <summary>
-        /// The format the media is ranked within
-        /// </summary>
-        public MediaFormat Format { get; set; }
+        public bool? AllTime { get; set; }
         /// <summary>
         /// The year the media is ranked within
         /// </summary>
@@ -32,9 +20,21 @@ namespace Disboard.Server.AniList.Models
         /// </summary>
         public MediaSeason? Season { get; set; }
         /// <summary>
-        /// If the ranking is based on all time instead of a season/year
+        /// The id of the rank
         /// </summary>
-        public bool? AllTime { get; set; }
+        public int? Id { get; set; }
+        /// <summary>
+        /// The numerical rank of the media
+        /// </summary>
+        public int? Rank { get; set; }
+        /// <summary>
+        /// The type of ranking
+        /// </summary>
+        public MediaRankType Type { get; set; }
+        /// <summary>
+        /// The format the media is ranked within
+        /// </summary>
+        public MediaFormat Format { get; set; }
         /// <summary>
         /// String that gives context to the ranking type and time span
         /// </summary>

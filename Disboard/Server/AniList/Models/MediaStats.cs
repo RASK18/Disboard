@@ -8,11 +8,11 @@ namespace Disboard.Server.AniList.Models
     public class MediaStats
     {
         /// <summary>
-        /// No Description
+        /// 
         /// </summary>
         public IEnumerable<ScoreDistribution> ScoreDistribution { get; set; }
         /// <summary>
-        /// No Description
+        /// 
         /// </summary>
         public IEnumerable<StatusDistribution> StatusDistribution { get; set; }
     }

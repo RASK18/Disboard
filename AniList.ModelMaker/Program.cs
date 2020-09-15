@@ -62,6 +62,11 @@ namespace AniList.ModelMaker
                         .AddField(t => t.Kind)
                         .AddField(t => t.Name)
                         .AddField(t => t.Description)
+                        .AddField(t => t.EnumValues,
+                            tev => tev
+                                .AddField(ev => ev.Name)
+                                .AddField(ev => ev.Description)
+                        )
                         .AddField(t => t.Fields,
                             tf => tf
                                 .AddField(f => f.Name)
@@ -69,11 +74,20 @@ namespace AniList.ModelMaker
                                 .AddField(f => f.Type,
                                     ft => ft
                                         .AddField(t => t.Kind)
-                                        .AddField(t => t.Name)))
-                        .AddField(t => t.EnumValues,
-                            tev => tev
-                                .AddField(ev => ev.Name)
-                                .AddField(ev => ev.Description)));
+                                        .AddField(t => t.Name)
+                                        .AddField(t => t.OfType,
+                                            tot => tot
+                                                .AddField(ot => ot.Kind)
+                                                .AddField(ot => ot.Name)
+                                                .AddField(ot => ot.OfType,
+                                                    ot2 => ot2
+                                                        .AddField(ot => ot.Kind)
+                                                        .AddField(ot => ot.Name)
+                                                        .AddField(ot => ot.OfType,
+                                                            ot3 => ot3
+                                                                .AddField(ot => ot.Kind)
+                                                                .AddField(ot => ot.Name)
+                                                            ))))));
 
             string query = $"{{ {iQuery.Build()} }}";
             return query;
@@ -132,7 +146,7 @@ namespace AniList.ModelMaker
             toWrite += "{\r\n";
 
             toWrite += "/// <summary>\r\n".AlignLeft(4);
-            toWrite += $"/// {type.Description}\r\n".AlignLeft(4);
+            toWrite += $"/// {type.Description?.Replace("\n", "")}\r\n".AlignLeft(4);
             toWrite += "/// </summary>\r\n".AlignLeft(4);
             toWrite += $"public enum {type.Name}\r\n".AlignLeft(4);
             toWrite += "{\r\n".AlignLeft(4);
@@ -140,7 +154,7 @@ namespace AniList.ModelMaker
             foreach (EnumValueQl enumValue in enumValues)
             {
                 toWrite += "/// <summary>\r\n".AlignLeft(8);
-                toWrite += $"/// {enumValue.Description}\r\n".AlignLeft(8);
+                toWrite += $"/// {enumValue.Description?.Replace("\n", "")}\r\n".AlignLeft(8);
                 toWrite += "/// </summary>\r\n".AlignLeft(8);
                 toWrite += $"[EnumMember(Value = \"{enumValue.Name}\")] {ConvertEnumName(enumValue.Name)},\r\n".AlignLeft(8);
             }
@@ -163,7 +177,10 @@ namespace AniList.ModelMaker
         private static void WriteObject(TypeQl type)
         {
             string toWrite = "";
-            List<FieldQl> fields = type.Fields.OrderBy(f => f.Type.Kind).ThenBy(f => f.Type.Name).ToList();
+            List<FieldQl> fields = type.Fields.Where(f => f.Type.Kind != TypeKindQl.Union)
+                                              .OrderBy(f => f.Type.Kind)
+                                              .ThenBy(f => f.Type.Name)
+                                              .ToList();
 
             if (fields.Any(f => f.Type.Kind == TypeKindQl.Enum))
             {
@@ -182,7 +199,7 @@ namespace AniList.ModelMaker
             toWrite += "{\r\n";
 
             toWrite += "/// <summary>\r\n".AlignLeft(4);
-            toWrite += $"/// {type.Description}\r\n".AlignLeft(4);
+            toWrite += $"/// {type.Description?.Replace("\n", "")}\r\n".AlignLeft(4);
             toWrite += "/// </summary>\r\n".AlignLeft(4);
             toWrite += $"public class {type.Name}\r\n".AlignLeft(4);
             toWrite += "{\r\n".AlignLeft(4);
@@ -190,9 +207,9 @@ namespace AniList.ModelMaker
             foreach (FieldQl field in fields)
             {
                 toWrite += "/// <summary>\r\n".AlignLeft(8);
-                toWrite += $"/// {field.Description}\r\n".AlignLeft(8);
+                toWrite += $"/// {field.Description?.Replace("\n", "")}\r\n".AlignLeft(8);
                 toWrite += "/// </summary>\r\n".AlignLeft(8);
-                toWrite += $"public {ConvertType(field.Type)} {field.Name} {{ get; set; }}\r\n".AlignLeft(8);
+                toWrite += $"public {ConvertFieldType(field.Type)} {field.Name.CamelToPascal()} {{ get; set; }}\r\n".AlignLeft(8);
             }
 
             toWrite += "}\r\n".AlignLeft(4);
@@ -201,11 +218,40 @@ namespace AniList.ModelMaker
             File.WriteAllText($"{AniListPath}\\Models\\{type.Name}.cs", toWrite);
         }
 
-        private static string ConvertType(TypeQl type)
+        private static string ConvertFieldType(TypeQl type, bool nonNull = false)
         {
+            string ends = nonNull ? "" : "?";
 
-            return type.Name;
+            if (type == null)
+                return "null404" + ends;
+
+            switch (type.Kind)
+            {
+                case TypeKindQl.Union:
+                case TypeKindQl.Interface:
+                case TypeKindQl.InputObject:
+                    return type.Name + "404" + ends;
+                case TypeKindQl.Enum:
+                    return type.Name + ends;
+                case TypeKindQl.Object:
+                    return type.Name;
+                case TypeKindQl.Scalar:
+                    return ConvertScalar(type.Name);
+                case TypeKindQl.List:
+                    return $"IEnumerable<{ConvertFieldType(type.OfType)}>";
+                case TypeKindQl.NonNull:
+                    return ConvertFieldType(type.OfType, true);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
+        private static string ConvertScalar(string scalar) =>
+            scalar.Replace("Int", "int?")
+                  .Replace("Float", "float?")
+                  .Replace("Boolean", "bool?")
+                  .Replace("Json", "string")
+                  .Replace("CountryCode", "string")
+                  .ToLowerInvariant();
     }
 }
