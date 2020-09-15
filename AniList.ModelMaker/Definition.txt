@@ -1,0 +1,7 @@
+﻿The type of ranking
+
+RATED
+Ranking is based on the media's ratings/score
+
+POPULAR
+Ranking is based on the media's popularity

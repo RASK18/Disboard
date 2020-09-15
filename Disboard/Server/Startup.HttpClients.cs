@@ -5,9 +5,9 @@ namespace Disboard.Server
 {
     public partial class Startup
     {
-        private static void InjectDependencies(IServiceCollection services)
+        private static void AddHttpClients(IServiceCollection services)
         {
-            services.AddSingleton<AniWrapper>();
+            services.AddHttpClient<AniClient>();
         }
     }
 }

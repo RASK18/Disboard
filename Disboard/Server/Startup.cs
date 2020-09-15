@@ -21,9 +21,11 @@ namespace Disboard.Server
         {
             ConfigureSwagger(services);
             InjectDependencies(services);
+            AddHttpClients(services);
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            ConfigureJsonSettings();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,10 +1,10 @@
-﻿using Disboard.Shared;
-using JikanDotNet;
+﻿using Disboard.Server.AniList;
+using Disboard.Server.AniList.Models;
+using Disboard.Server.Extensions;
+using Disboard.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Disboard.Server.Controllers
@@ -14,23 +14,21 @@ namespace Disboard.Server.Controllers
     [Produces("application/json")]
     public class AnimeController
     {
-        private readonly IJikan _jikan;
-        private readonly ILogger<ScheduleController> _logger;
+        private readonly AniWrapper _alWrap;
+        private readonly ILogger<AnimeController> _logger;
 
-        public AnimeController(IJikan jikan, ILogger<ScheduleController> logger)
+        public AnimeController(AniWrapper alWrap, ILogger<AnimeController> logger)
         {
-            _jikan = jikan;
+            _alWrap = alWrap;
             _logger = logger;
         }
 
-        [HttpGet("Popular", Name = "GetPopularAnime")]
-        [ProducesResponseType(typeof(Schedule), StatusCodes.Status200OK)]
-        public async Task<IEnumerable<AnimeDto>> GetPopular()
+        [HttpGet("Test", Name = "GetTest")]
+        [ProducesResponseType(typeof(AnimeDto), StatusCodes.Status200OK)]
+        public async Task<Media> GetTest()
         {
-            AnimeTop animeTop = await _jikan.GetAnimeTop(TopAnimeExtension.TopTV);
-
-            IEnumerable<AnimeDto> animesDto = animeTop.Top.Take(24).Select(a => new AnimeDto(a));
-            return animesDto;
+            Media result = await _alWrap.GetAnime(108632);
+            return result;
         }
     }
 }
