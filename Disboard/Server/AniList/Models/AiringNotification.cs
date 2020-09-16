@@ -27,14 +27,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the Notification
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the aired anime
         /// </summary>
-        public int? AnimeId { get; set; }
+        public int AnimeId { get; set; }
         /// <summary>
         /// The episode number that just aired
         /// </summary>
-        public int? Episode { get; set; }
+        public int Episode { get; set; }
     }
 }

@@ -26,14 +26,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the Notification
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the user who replied to the activity
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// The id of the activity which was replied too
         /// </summary>
-        public int? ActivityId { get; set; }
+        public int ActivityId { get; set; }
     }
 }

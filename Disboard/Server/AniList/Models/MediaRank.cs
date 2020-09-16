@@ -22,11 +22,11 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the rank
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The numerical rank of the media
         /// </summary>
-        public int? Rank { get; set; }
+        public int Rank { get; set; }
         /// <summary>
         /// The type of ranking
         /// </summary>

@@ -1,5 +1,4 @@
 using Disboard.Server.AniList.Enums;
-using Newtonsoft.Json;
 
 namespace Disboard.Server.AniList.Models
 {
@@ -43,8 +42,7 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// Staff member that the submission is referencing
         /// </summary>
-        [JsonProperty("staff")]
-        public Staff Staff2 { get; set; }
+        public Staff Staff { get; set; }
         /// <summary>
         /// The staff images
         /// </summary>
@@ -64,10 +62,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the staff member
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// If the staff member is marked as favourite by the currently authenticated user
         /// </summary>
-        public bool? IsFavourite { get; set; }
+        public bool IsFavourite { get; set; }
     }
 }

@@ -30,6 +30,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// 
         /// </summary>
-        public bool? IsDeprecated { get; set; }
+        public bool IsDeprecated { get; set; }
     }
 }

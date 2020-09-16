@@ -34,14 +34,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the Notification
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the user who create the comment reply
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// The id of the reply comment
         /// </summary>
-        public int? CommentId { get; set; }
+        public int CommentId { get; set; }
     }
 }

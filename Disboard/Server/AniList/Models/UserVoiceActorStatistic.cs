@@ -14,19 +14,19 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// 
         /// </summary>
-        public int? Count { get; set; }
+        public int Count { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public float? MeanScore { get; set; }
+        public float MeanScore { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int? MinutesWatched { get; set; }
+        public int MinutesWatched { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int? ChaptersRead { get; set; }
+        public int ChaptersRead { get; set; }
         /// <summary>
         /// 
         /// </summary>

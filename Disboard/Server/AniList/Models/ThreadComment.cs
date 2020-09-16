@@ -46,18 +46,18 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the comment
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The amount of likes the comment has
         /// </summary>
-        public int? LikeCount { get; set; }
+        public int LikeCount { get; set; }
         /// <summary>
         /// The time of the comments creation
         /// </summary>
-        public int? CreatedAt { get; set; }
+        public int CreatedAt { get; set; }
         /// <summary>
         /// The time of the comments last update
         /// </summary>
-        public int? UpdatedAt { get; set; }
+        public int UpdatedAt { get; set; }
     }
 }

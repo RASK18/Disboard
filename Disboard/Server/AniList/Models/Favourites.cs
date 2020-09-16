@@ -1,7 +1,7 @@
 namespace Disboard.Server.AniList.Models
 {
     /// <summary>
-    /// User's favourite anime, manga, characters, staff & studios
+    /// User's favourite anime, manga, characters, staff and studios
     /// </summary>
     public class Favourites
     {

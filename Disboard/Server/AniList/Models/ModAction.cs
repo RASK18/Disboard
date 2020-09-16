@@ -34,10 +34,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the action
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int? CreatedAt { get; set; }
+        public int CreatedAt { get; set; }
     }
 }

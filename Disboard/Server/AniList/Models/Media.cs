@@ -41,7 +41,7 @@ namespace Disboard.Server.AniList.Models
         /// </summary>
         public int? SeasonYear { get; set; }
         /// <summary>
-        /// The year & season the media was initially released in
+        /// The year and season the media was initially released in
         /// </summary>
         public int? SeasonInt { get; set; }
         /// <summary>
@@ -215,10 +215,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the media
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// If the media is marked as favourite by the current authenticated user
         /// </summary>
-        public bool? IsFavourite { get; set; }
+        public bool IsFavourite { get; set; }
     }
 }

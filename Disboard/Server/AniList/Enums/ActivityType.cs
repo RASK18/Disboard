@@ -16,7 +16,7 @@ namespace Disboard.Server.AniList.Enums
         /// </summary>
         [EnumMember(Value = "MANGA_LIST")] MangaList,
         /// <summary>
-        /// Anime & Manga list update, only used in query arguments
+        /// Anime and Manga list update, only used in query arguments
         /// </summary>
         [EnumMember(Value = "MEDIA_LIST")] MediaList,
         /// <summary>

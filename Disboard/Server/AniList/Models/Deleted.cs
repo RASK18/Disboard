@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace Disboard.Server.AniList.Models
 {
     /// <summary>
@@ -10,7 +8,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// If an item has been successfully deleted
         /// </summary>
-        [JsonProperty("deleted")]
-        public bool? Deleted2 { get; set; }
+        public bool? Deleted { get; set; }
     }
 }

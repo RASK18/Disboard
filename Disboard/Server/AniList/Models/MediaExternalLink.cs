@@ -8,7 +8,7 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the external link
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The url of the external link
         /// </summary>

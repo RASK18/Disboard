@@ -63,18 +63,18 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the activity
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The number of activity replies
         /// </summary>
-        public int? ReplyCount { get; set; }
+        public int ReplyCount { get; set; }
         /// <summary>
         /// The amount of likes the activity has
         /// </summary>
-        public int? LikeCount { get; set; }
+        public int LikeCount { get; set; }
         /// <summary>
         /// The time the activity was created at
         /// </summary>
-        public int? CreatedAt { get; set; }
+        public int CreatedAt { get; set; }
     }
 }

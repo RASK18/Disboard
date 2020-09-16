@@ -20,7 +20,7 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the studio
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The name of the studio
         /// </summary>
@@ -28,10 +28,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// If the studio is an animation studio or a different kind of company
         /// </summary>
-        public bool? IsAnimationStudio { get; set; }
+        public bool IsAnimationStudio { get; set; }
         /// <summary>
         /// If the studio is marked as favourite by the currently authenticated user
         /// </summary>
-        public bool? IsFavourite { get; set; }
+        public bool IsFavourite { get; set; }
     }
 }

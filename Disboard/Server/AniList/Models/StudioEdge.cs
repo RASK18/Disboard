@@ -20,6 +20,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// If the studio is the main animation studio of the anime
         /// </summary>
-        public bool? IsMain { get; set; }
+        public bool IsMain { get; set; }
     }
 }

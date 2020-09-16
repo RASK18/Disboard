@@ -70,13 +70,13 @@ namespace Disboard.Server.AniList.Models
         /// </summary>
         public UserOptions Options { get; set; }
         /// <summary>
-        /// The users anime & manga list statistics
+        /// The users anime and manga list statistics
         /// </summary>
         public UserStatisticTypes Statistics { get; set; }
         /// <summary>
         /// The id of the user
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The name of the user
         /// </summary>

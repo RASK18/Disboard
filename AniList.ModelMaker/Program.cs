@@ -26,15 +26,14 @@ namespace AniList.ModelMaker
             string query = BuildQuery();
             string content = await PostQuery(query);
             SchemaQl schema = MapResponse(content);
-            List<TypeQl> types = FilterTypes(schema);
 
-            List<TypeQl> enums = types.Where(t => t.Kind == TypeKindQl.Enum).ToList();
+            List<TypeQl> enums = schema.Types.Where(t => t.Kind == TypeKindQl.Enum).ToList();
             foreach (TypeQl type in enums)
             {
                 WriteEnum(type);
             }
 
-            List<TypeQl> objects = types.Where(t => t.Kind == TypeKindQl.Object).ToList();
+            List<TypeQl> objects = schema.Types.Where(t => t.Kind == TypeKindQl.Object).ToList();
             foreach (TypeQl type in objects)
             {
                 WriteObject(type);
@@ -128,14 +127,6 @@ namespace AniList.ModelMaker
             return schema;
         }
 
-        private static List<TypeQl> FilterTypes(SchemaQl schema)
-        {
-            List<TypeQl> types = schema.Types.Where(t => t.Kind == TypeKindQl.Enum ||
-                                                         t.Kind == TypeKindQl.Object).ToList();
-
-            return types;
-        }
-
         private static void WriteEnum(TypeQl type)
         {
             string toWrite = "";
@@ -146,7 +137,7 @@ namespace AniList.ModelMaker
             toWrite += "{\r\n";
 
             toWrite += "/// <summary>\r\n".AlignLeft(4);
-            toWrite += $"/// {type.Description?.Replace("\n", "")}\r\n".AlignLeft(4);
+            toWrite += $"/// {DescriptionManager(type.Description)}\r\n".AlignLeft(4);
             toWrite += "/// </summary>\r\n".AlignLeft(4);
             toWrite += $"public enum {type.Name}\r\n".AlignLeft(4);
             toWrite += "{\r\n".AlignLeft(4);
@@ -154,9 +145,9 @@ namespace AniList.ModelMaker
             foreach (EnumValueQl enumValue in enumValues)
             {
                 toWrite += "/// <summary>\r\n".AlignLeft(8);
-                toWrite += $"/// {enumValue.Description?.Replace("\n", "")}\r\n".AlignLeft(8);
+                toWrite += $"/// {DescriptionManager(enumValue.Description)}\r\n".AlignLeft(8);
                 toWrite += "/// </summary>\r\n".AlignLeft(8);
-                toWrite += $"[EnumMember(Value = \"{enumValue.Name}\")] {ConvertEnumName(enumValue.Name)},\r\n".AlignLeft(8);
+                toWrite += $"[EnumMember(Value = \"{enumValue.Name}\")] {EnumNameManager(enumValue.Name)},\r\n".AlignLeft(8);
             }
 
             toWrite += "}\r\n".AlignLeft(4);
@@ -165,7 +156,7 @@ namespace AniList.ModelMaker
             File.WriteAllText($"{AniListPath}\\Enums\\{type.Name}.cs", toWrite);
         }
 
-        private static string ConvertEnumName(string name)
+        private static string EnumNameManager(string name)
         {
             string titleCase = name.Split('_')
                                    .Select(w => char.ToUpperInvariant(w[0]) + w.Substring(1).ToLowerInvariant())
@@ -176,18 +167,21 @@ namespace AniList.ModelMaker
 
         private static void WriteObject(TypeQl type)
         {
-            string toWrite = "";
-            List<FieldQl> fields = type.Fields.Where(f => f.Type.Kind != TypeKindQl.Union)
+            List<TypeKindQl> excludedKinds = new List<TypeKindQl> { TypeKindQl.Union, TypeKindQl.Interface, TypeKindQl.InputObject };
+
+            List<FieldQl> fields = type.Fields.Where(f => !excludedKinds.Contains(GetBaseKind(f)))
                                               .OrderBy(f => f.Type.Kind)
                                               .ThenBy(f => f.Type.Name)
                                               .ToList();
 
-            if (fields.Any(f => f.Type.Kind == TypeKindQl.Enum))
+            string toWrite = "";
+
+            if (fields.Any(f => GetBaseKind(f) == TypeKindQl.Enum))
             {
                 toWrite += "using Disboard.Server.AniList.Enums;\r\n";
             }
 
-            if (fields.Any(f => f.Type.Kind == TypeKindQl.List))
+            if (fields.Any(f => f.Type.Kind == TypeKindQl.List || f.Type.OfType?.Kind == TypeKindQl.List))
             {
                 toWrite += "using System.Collections.Generic;\r\n";
             }
@@ -199,7 +193,7 @@ namespace AniList.ModelMaker
             toWrite += "{\r\n";
 
             toWrite += "/// <summary>\r\n".AlignLeft(4);
-            toWrite += $"/// {type.Description?.Replace("\n", "")}\r\n".AlignLeft(4);
+            toWrite += $"/// {DescriptionManager(type.Description)}\r\n".AlignLeft(4);
             toWrite += "/// </summary>\r\n".AlignLeft(4);
             toWrite += $"public class {type.Name}\r\n".AlignLeft(4);
             toWrite += "{\r\n".AlignLeft(4);
@@ -207,9 +201,9 @@ namespace AniList.ModelMaker
             foreach (FieldQl field in fields)
             {
                 toWrite += "/// <summary>\r\n".AlignLeft(8);
-                toWrite += $"/// {field.Description?.Replace("\n", "")}\r\n".AlignLeft(8);
+                toWrite += $"/// {DescriptionManager(field.Description)}\r\n".AlignLeft(8);
                 toWrite += "/// </summary>\r\n".AlignLeft(8);
-                toWrite += $"public {ConvertFieldType(field.Type)} {field.Name.CamelToPascal()} {{ get; set; }}\r\n".AlignLeft(8);
+                toWrite += $"public {TypeManager(field.Type)} {field.Name.CamelToPascal()} {{ get; set; }}\r\n".AlignLeft(8);
             }
 
             toWrite += "}\r\n".AlignLeft(4);
@@ -218,40 +212,51 @@ namespace AniList.ModelMaker
             File.WriteAllText($"{AniListPath}\\Models\\{type.Name}.cs", toWrite);
         }
 
-        private static string ConvertFieldType(TypeQl type, bool nonNull = false)
+        private static TypeKindQl GetBaseKind(FieldQl field) =>
+            field.Type.OfType?.OfType?.OfType?.Kind ??
+            field.Type.OfType?.OfType?.Kind ??
+            field.Type.OfType?.Kind ??
+            field.Type.Kind;
+
+        private static string DescriptionManager(string description) =>
+            description?.Replace("\n", string.Empty)
+                        .Replace("&", "and");
+
+        private static string TypeManager(TypeQl type, bool isUpperNonNull = false)
         {
-            string ends = nonNull ? "" : "?";
+            if (type.OfType == null)
+                return TypeNameManager(type, isUpperNonNull);
 
-            if (type == null)
-                return "null404" + ends;
+            if (type.Kind == TypeKindQl.NonNull)
+                return TypeManager(type.OfType, true);
 
+            return $"IEnumerable<{TypeManager(type.OfType)}>";
+        }
+
+        private static string TypeNameManager(TypeQl type, bool isRequired)
+        {
+            string requiredMark = isRequired ? "" : "?";
+
+            // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
             switch (type.Kind)
             {
-                case TypeKindQl.Union:
-                case TypeKindQl.Interface:
-                case TypeKindQl.InputObject:
-                    return type.Name + "404" + ends;
-                case TypeKindQl.Enum:
-                    return type.Name + ends;
                 case TypeKindQl.Object:
                     return type.Name;
+                case TypeKindQl.Enum:
+                    return type.Name + requiredMark;
                 case TypeKindQl.Scalar:
-                    return ConvertScalar(type.Name);
-                case TypeKindQl.List:
-                    return $"IEnumerable<{ConvertFieldType(type.OfType)}>";
-                case TypeKindQl.NonNull:
-                    return ConvertFieldType(type.OfType, true);
+                    string result = type.Name.Replace("Boolean", "bool")
+                                             .Replace("Json", "string")
+                                             .Replace("CountryCode", "string")
+                                             .ToLowerInvariant();
+
+                    if (result != "string")
+                        result += requiredMark;
+
+                    return result;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-
-        private static string ConvertScalar(string scalar) =>
-            scalar.Replace("Int", "int?")
-                  .Replace("Float", "float?")
-                  .Replace("Boolean", "bool?")
-                  .Replace("Json", "string")
-                  .Replace("CountryCode", "string")
-                  .ToLowerInvariant();
     }
 }

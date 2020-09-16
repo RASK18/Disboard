@@ -34,14 +34,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the reply
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The amount of likes the reply has
         /// </summary>
-        public int? LikeCount { get; set; }
+        public int LikeCount { get; set; }
         /// <summary>
         /// The time the reply was created at
         /// </summary>
-        public int? CreatedAt { get; set; }
+        public int CreatedAt { get; set; }
     }
 }

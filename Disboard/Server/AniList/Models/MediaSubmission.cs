@@ -67,6 +67,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the submission
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
     }
 }

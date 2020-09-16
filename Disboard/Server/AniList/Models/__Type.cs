@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Disboard.Server.AniList.Enums;
+using System.Collections.Generic;
 
 namespace Disboard.Server.AniList.Models
 {

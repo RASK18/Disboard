@@ -28,18 +28,18 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the tag
         /// </summary>
-        public int? MediaId { get; set; }
+        public int MediaId { get; set; }
         /// <summary>
         /// The day the data was recorded (timestamp)
         /// </summary>
-        public int? Date { get; set; }
+        public int Date { get; set; }
         /// <summary>
         /// The amount of media activity on the day
         /// </summary>
-        public int? Trending { get; set; }
+        public int Trending { get; set; }
         /// <summary>
         /// If the media was being released at this time
         /// </summary>
-        public bool? Releasing { get; set; }
+        public bool Releasing { get; set; }
     }
 }

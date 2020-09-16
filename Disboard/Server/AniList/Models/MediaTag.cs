@@ -32,7 +32,7 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the tag
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The name of the tag
         /// </summary>

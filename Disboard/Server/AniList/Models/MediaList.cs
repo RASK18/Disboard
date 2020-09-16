@@ -78,14 +78,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the list entry
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the user owner of the list entry
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// The id of the media
         /// </summary>
-        public int? MediaId { get; set; }
+        public int MediaId { get; set; }
     }
 }

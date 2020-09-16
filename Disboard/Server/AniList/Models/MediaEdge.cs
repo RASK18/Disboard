@@ -43,6 +43,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// If the studio is the main animation studio of the media (For Studio->MediaConnection field only)
         /// </summary>
-        public bool? IsMainStudio { get; set; }
+        public bool IsMainStudio { get; set; }
     }
 }

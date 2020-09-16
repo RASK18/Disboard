@@ -32,7 +32,7 @@ namespace Disboard.Server.AniList.Models
         /// </summary>
         public MediaList MediaList { get; set; }
         /// <summary>
-        /// Media list collection query, provides list pre-grouped by status & custom lists. User ID and Media Type arguments required.
+        /// Media list collection query, provides list pre-grouped by status and custom lists. User ID and Media Type arguments required.
         /// </summary>
         public MediaListCollection MediaListCollection { get; set; }
         /// <summary>

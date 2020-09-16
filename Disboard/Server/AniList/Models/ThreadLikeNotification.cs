@@ -34,14 +34,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the Notification
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the user who liked to the activity
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// The id of the thread which was liked
         /// </summary>
-        public int? ThreadId { get; set; }
+        public int ThreadId { get; set; }
     }
 }

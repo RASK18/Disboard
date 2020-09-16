@@ -26,10 +26,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the Notification
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the new media
         /// </summary>
-        public int? MediaId { get; set; }
+        public int MediaId { get; set; }
     }
 }

@@ -8,14 +8,14 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The day the data was recorded (timestamp)
         /// </summary>
-        public int? Date { get; set; }
+        public int Date { get; set; }
         /// <summary>
         /// 
         /// </summary>
-        public int? Count { get; set; }
+        public int Count { get; set; }
         /// <summary>
         /// The change from yesterday
         /// </summary>
-        public int? Change { get; set; }
+        public int Change { get; set; }
     }
 }

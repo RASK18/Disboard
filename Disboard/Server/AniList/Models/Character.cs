@@ -36,10 +36,10 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the character
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// If the character is marked as favourite by the currently authenticated user
         /// </summary>
-        public bool? IsFavourite { get; set; }
+        public bool IsFavourite { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 namespace Disboard.Server.AniList.Models
 {
     /// <summary>
-    /// Score & Watcher stats for airing anime by episode and mid-week
+    /// Score and Watcher stats for airing anime by episode and mid-week
     /// </summary>
     public class AiringProgression
     {

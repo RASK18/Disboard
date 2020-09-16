@@ -24,6 +24,6 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// 
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
     }
 }

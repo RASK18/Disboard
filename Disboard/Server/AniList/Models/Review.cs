@@ -54,22 +54,22 @@ namespace Disboard.Server.AniList.Models
         /// <summary>
         /// The id of the review
         /// </summary>
-        public int? Id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The id of the review's creator
         /// </summary>
-        public int? UserId { get; set; }
+        public int UserId { get; set; }
         /// <summary>
         /// The id of the review's media
         /// </summary>
-        public int? MediaId { get; set; }
+        public int MediaId { get; set; }
         /// <summary>
         /// The time of the thread creation
         /// </summary>
-        public int? CreatedAt { get; set; }
+        public int CreatedAt { get; set; }
         /// <summary>
         /// The time of the thread last update
         /// </summary>
-        public int? UpdatedAt { get; set; }
+        public int UpdatedAt { get; set; }
     }
 }
