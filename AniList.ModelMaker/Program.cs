@@ -181,6 +181,11 @@ namespace AniList.ModelMaker
                 toWrite += "using Disboard.Server.AniList.Enums;\r\n";
             }
 
+            if (fields.Any(f => f.Name.CamelToPascal() == type.Name))
+            {
+                toWrite += "using Newtonsoft.Json;\r\n";
+            }
+
             if (fields.Any(f => f.Type.Kind == TypeKindQl.List || f.Type.OfType?.Kind == TypeKindQl.List))
             {
                 toWrite += "using System.Collections.Generic;\r\n";
@@ -203,7 +208,15 @@ namespace AniList.ModelMaker
                 toWrite += "/// <summary>\r\n".AlignLeft(8);
                 toWrite += $"/// {DescriptionManager(field.Description)}\r\n".AlignLeft(8);
                 toWrite += "/// </summary>\r\n".AlignLeft(8);
-                toWrite += $"public {TypeManager(field.Type)} {field.Name.CamelToPascal()} {{ get; set; }}\r\n".AlignLeft(8);
+
+                string namePascal = field.Name.CamelToPascal();
+                if (namePascal == type.Name)
+                {
+                    namePascal += "2";
+                    toWrite += $"[JsonProperty(\"{field.Name}\")]\r\n".AlignLeft(8);
+                }
+
+                toWrite += $"public {TypeManager(field.Type)} {namePascal} {{ get; set; }}\r\n".AlignLeft(8);
             }
 
             toWrite += "}\r\n".AlignLeft(4);
